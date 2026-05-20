@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mira G — Agência de Crescimento e Tráfego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #FF6A00;
+    --bg: #0D0D0D;
+    --bg2: #0a0a0a;
+    --surface: #111;
+    --border: #1e1e1e;
+    --border2: #2a2a2a;
+    --text: #F2F1EC;
+    --muted: #666;
+    --muted2: #444;
+    --font: 'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- UTILITY ---- */
+  .orange { color: var(--orange); }
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+  }
+
+  /* ---- NAV ---- */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(13,13,13,0.96);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .btn-primary {
+    background: var(--orange);
+    color: #0D0D0D;
+    border: none;
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 0.5px solid var(--border2);
+    padding: 0.65rem 1.4rem;
+    border-radius: 6px;
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s;
+  }
+  .btn-secondary:hover { border-color: #555; }
+
+  /* ---- HERO ---- */
+  .hero {
+    padding: 6rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,106,0,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: relative;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 0.5px solid #2a2a2a;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    letter-spacing: 0.07em;
+    color: var(--orange);
+    width: fit-content;
+  }
+  .hero-dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.75;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .hero-ctas .btn-primary { padding: 0.85rem 2rem; font-size: 0.95rem; }
+  .hero-ctas .btn-secondary { padding: 0.85rem 1.6rem; font-size: 0.95rem; }
+
+  /* ---- MÉTRICAS ---- */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .metric {
+    padding: 2rem 4rem;
+    border-right: 0.5px solid var(--border);
+    transition: background 0.2s;
+  }
+  .metric:last-child { border-right: none; }
+  .metric:hover { background: #0f0f0f; }
+  .metric-num {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .metric-label {
+    font-size: 0.75rem;
+    color: #444;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ---- PILARES ---- */
+  .pilares {
+    padding: 5rem 4rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .pilares h2, .servicos h2, .processo h2, .depos h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+  .pilar {
+    background: var(--bg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+  .pilar:hover { background: #111; }
+  .pilar-icon {
+    width: 42px; height: 42px;
+    border: 0.5px solid var(--orange);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--orange);
+  }
+  .pilar-icon svg { width: 20px; height: 20px; stroke: var(--orange); fill: none; stroke-width: 1.8; }
+  .pilar h3 {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 600;
+  }
+  .pilar p { font-size: 0.875rem; color: #555; line-height: 1.65; }
+
+  /* ---- SERVIÇOS ---- */
+  .servicos {
+    padding: 5rem 4rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+  .servico {
+    background: var(--bg);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .servico:hover { background: #111; }
+  .servico-num { font-size: 0.7rem; color: #2a2a2a; letter-spacing: 0.06em; font-weight: 700; }
+  .servico h3 { font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .servico p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+  .servico-arrow {
+    position: absolute;
+    top: 2.5rem; right: 2rem;
+    color: #2a2a2a;
+    font-size: 18px;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .servico:hover .servico-arrow { color: var(--orange); transform: translate(3px, -3px); }
+
+  /* ---- PROCESSO ---- */
+  .processo {
+    padding: 5rem 4rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .steps { display: flex; flex-direction: column; }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
+    padding: 2rem 0;
+    border-bottom: 0.5px solid #161616;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--orange);
+    min-width: 2rem;
+    padding-top: 3px;
+    letter-spacing: 0.05em;
+  }
+  .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; max-width: 520px; }
+
+  /* ---- DEPOIMENTOS ---- */
+  .depos {
+    padding: 5rem 4rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .depos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+  .depo {
+    background: var(--bg);
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .depo-text { font-size: 0.9rem; color: #777; line-height: 1.75; flex: 1; }
+  .depo-text strong { color: var(--orange); font-weight: 500; }
+  .depo-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 1rem;
+    border-top: 0.5px solid #161616;
+  }
+  .avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 0.5px solid #2a2a2a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--orange);
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 0.875rem; font-weight: 600; }
+  .author-role { font-size: 0.75rem; color: #444; }
+
+  /* ---- CTA FINAL ---- */
+  .cta-final {
+    padding: 7rem 4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-final::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(255,106,0,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-final h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    max-width: 600px;
+  }
+  .cta-final p {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 440px;
+    line-height: 1.75;
+  }
+  .cta-final .btn-primary { padding: 1rem 2.5rem; font-size: 1rem; }
+
+  /* ---- FORMULÁRIO ---- */
+  .form-section {
+    padding: 5rem 4rem;
+    border-top: 0.5px solid var(--border);
+    background: var(--bg2);
+  }
+  .form-inner { max-width: 600px; margin: 0 auto; }
+  .form-inner h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+  .form-inner > p { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.5rem; }
+  .form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .mg-input, .mg-select, .mg-textarea {
+    background: #111;
+    border: 0.5px solid #222;
+    color: var(--text);
+    padding: 0.9rem 1.1rem;
+    border-radius: 6px;
+    font-family: var(--font);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .mg-input:focus, .mg-select:focus, .mg-textarea:focus { border-color: var(--orange); }
+  .mg-input::placeholder, .mg-textarea::placeholder { color: #333; }
+  .mg-select { color: #777; -webkit-appearance: none; appearance: none; }
+  .mg-select option { background: #111; color: var(--text); }
+  .mg-textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    background: var(--orange);
+    color: #0D0D0D;
+    border: none;
+    padding: 1rem;
+    border-radius: 6px;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+  .form-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .form-note { font-size: 0.75rem; color: #333; text-align: center; margin-top: 0.25rem; }
+  .success-msg {
+    display: none;
+    background: rgba(20,40,20,0.6);
+    border: 0.5px solid #1a3a1a;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #5ec95e;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+  }
+  .field-error { border-color: var(--orange) !important; }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    padding: 1.75rem 4rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-brand { font-size: 0.75rem; color: #333; letter-spacing: 0.07em; text-transform: uppercase; }
+  .footer-tagline { font-size: 0.72rem; color: #2a2a2a; letter-spacing: 0.08em; }
+  .footer-tagline span { color: var(--orange); }
+
+  /* ---- SCROLL ANIM ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 900px) {
+    .nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .metric { padding: 1.5rem 1.75rem; border-bottom: 0.5px solid var(--border); }
+    .pilares { padding: 3rem 1.5rem; }
+    .pilares-grid { grid-template-columns: repeat(2, 1fr); }
+    .servicos { padding: 3rem 1.5rem; }
+    .servicos-grid { grid-template-columns: 1fr 1fr; }
+    .processo { padding: 3rem 1.5rem; }
+    .step { gap: 1.5rem; }
+    .depos { padding: 3rem 1.5rem; }
+    .depos-grid { grid-template-columns: 1fr; }
+    .cta-final { padding: 4rem 1.5rem; }
+    .form-section { padding: 3rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+  @media (max-width: 560px) {
+    .servicos-grid { grid-template-columns: 1fr; }
+    .pilares-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">mira <span>G</span></a>
+  <ul class="nav-links">
+    <li><a href="#pilares">Método</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#processo">Processo</a></li>
+    <li><a href="#depoimentos">Resultados</a></li>
+  </ul>
+  <a href="#contato" class="btn-primary">
+    Fale com um especialista
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag"><span class="hero-dot"></span>Agência de crescimento e tráfego</span>
+    <h1>Estratégia, tráfego<br>e performance que<br>geram <span class="orange">crescimento.</span></h1>
+    <p class="hero-sub">Unimos direção, foco e dados para transformar investimento em resultado real. Mais que tráfego — entregamos método.</p>
+    <div class="hero-ctas">
+      <a href="#contato" class="btn-primary">
+        Fale com um especialista
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#servicos" class="btn-secondary">Ver serviços</a>
+    </div>
+  </div>
+</section>
+
+<!-- MÉTRICAS -->
+<div class="metrics reveal">
+  <div class="metric">
+    <div class="metric-num orange">+120</div>
+    <div class="metric-label">Clientes atendidos</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num">R$200M<span style="font-size:1.1rem">+</span></div>
+    <div class="metric-label">Em tráfego gerenciado</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num orange">+35%</div>
+    <div class="metric-label">Crescimento médio</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num">98%</div>
+    <div class="metric-label">Taxa de retenção</div>
+  </div>
+</div>
+
+<!-- PILARES -->
+<section class="pilares reveal" id="pilares">
+  <div class="section-tag">• Nosso método</div>
+  <h2>Pilares que guiam<br><span class="orange">cada decisão</span></h2>
+  <div class="pilares-grid">
+    <div class="pilar">
+      <div class="pilar-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <h3>Direção</h3>
+      <p>Estratégia clara para escolhas que levam ao resultado. Sem achismo, sem desperdício.</p>
+    </div>
+    <div class="pilar">
+      <div class="pilar-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <h3>Foco</h3>
+      <p>Prioridades certas, execução disciplinada, impacto real nos números do seu negócio.</p>
+    </div>
+    <div class="pilar">
+      <div class="pilar-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/><path d="M10 10l1.5 1.5L14 9"/></svg>
+      </div>
+      <h3>Precisão</h3>
+      <p>Decisões baseadas em dados, análise e inteligência. Otimização contínua e mensurável.</p>
+    </div>
+    <div class="pilar">
+      <div class="pilar-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 4"/><path d="M21 21H3"/></svg>
+      </div>
+      <h3>Crescimento</h3>
+      <p>Escalamos negócios com performance sustentável. Crescimento que se mantém no longo prazo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="servicos reveal" id="servicos">
+  <div class="section-tag">• O que fazemos</div>
+  <h2>Serviços que<br><span class="orange">geram resultado</span></h2>
+  <div class="servicos-grid">
+    <div class="servico">
+      <div class="servico-num">01</div>
+      <h3>Tráfego Pago</h3>
+      <p>Gestão estratégica de campanhas no Meta Ads, Google Ads e TikTok Ads. Audiência certa, na hora certa, com o custo ideal.</p>
+      <span class="servico-arrow">↗</span>
+    </div>
+    <div class="servico">
+      <div class="servico-num">02</div>
+      <h3>Estratégia de Growth</h3>
+      <p>Análise de funil, oportunidades de escala e plano de crescimento baseado em dados reais do seu negócio.</p>
+      <span class="servico-arrow">↗</span>
+    </div>
+    <div class="servico">
+      <div class="servico-num">03</div>
+      <h3>Gestão de Redes Sociais</h3>
+      <p>Conteúdo estratégico, calendário editorial e posicionamento de marca para converter audiência em clientes.</p>
+      <span class="servico-arrow">↗</span>
+    </div>
+    <div class="servico">
+      <div class="servico-num">04</div>
+      <h3>Copywriting & Criativos</h3>
+      <p>Textos e peças visuais com foco em conversão. Da copy do anúncio até a landing page que fecha o cliente.</p>
+      <span class="servico-arrow">↗</span>
+    </div>
+    <div class="servico">
+      <div class="servico-num">05</div>
+      <h3>Analytics & BI</h3>
+      <p>Dashboards, relatórios e inteligência de dados para que você entenda exatamente onde está o crescimento.</p>
+      <span class="servico-arrow">↗</span>
+    </div>
+    <div class="servico">
+      <div class="servico-num">06</div>
+      <h3>Consultoria Estratégica</h3>
+      <p>Diagnóstico completo, posicionamento de mercado e roadmap de crescimento para o próximo nível do negócio.</p>
+      <span class="servico-arrow">↗</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section class="processo reveal" id="processo">
+  <div class="section-tag">• Como trabalhamos</div>
+  <h2>Um processo criado<br><span class="orange">para não errar</span></h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div>
+        <h3>Diagnóstico & Alinhamento</h3>
+        <p>Entendemos o negócio, mapeamos o funil atual e identificamos os gargalos que estão travando o crescimento.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div>
+        <h3>Estratégia com Direção</h3>
+        <p>Montamos o plano de ação com prioridades claras, metas definidas e canais selecionados com precisão.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div>
+        <h3>Execução & Performance</h3>
+        <p>Campanhas no ar com acompanhamento diário. Otimizamos continuamente para extrair o máximo de cada real investido.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div>
+        <h3>Dados & Escalada</h3>
+        <p>Relatórios transparentes, decisões baseadas em dados e escala estruturada para crescimento sustentável.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depos reveal" id="depoimentos">
+  <div class="section-tag">• Clientes</div>
+  <h2>Resultados que<br><span class="orange">falam por si</span></h2>
+  <div class="depos-grid">
+    <div class="depo">
+      <p class="depo-text">"Em 3 meses com a Mira G, nosso <strong>custo por lead caiu 40%</strong> e o volume de vendas dobrou. É exatamente o que eles prometem: direção, foco e resultado."</p>
+      <div class="depo-author">
+        <div class="avatar">RL</div>
+        <div>
+          <div class="author-name">Rafael Lima</div>
+          <div class="author-role">CEO · E-commerce de moda</div>
+        </div>
+      </div>
+    </div>
+    <div class="depo">
+      <p class="depo-text">"O diferencial não é só o tráfego. É a <strong>visão estratégica que eles trazem</strong>. Finalmente tenho uma agência que entende de negócio, não só de anúncio."</p>
+      <div class="depo-author">
+        <div class="avatar">CM</div>
+        <div>
+          <div class="author-name">Camila Mendes</div>
+          <div class="author-role">Fundadora · Clínica estética</div>
+        </div>
+      </div>
+    </div>
+    <div class="depo">
+      <p class="depo-text">"Escalamos de R$80k para <strong>R$300k de faturamento mensal</strong> em menos de um ano. A Mira G não é agência, é parceira de crescimento mesmo."</p>
+      <div class="depo-author">
+        <div class="avatar">PT</div>
+        <div>
+          <div class="author-name">Pedro Tavares</div>
+          <div class="author-role">Diretor · SaaS B2B</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final reveal">
+  <span class="hero-tag" style="justify-content:center"><span class="hero-dot"></span>Próximo passo</span>
+  <h2>Seu negócio pronto<br>para o próximo <span class="orange">nível.</span></h2>
+  <p>Uma conversa pode mudar a trajetória da sua empresa. Fale com um especialista e descubra onde está o seu crescimento.</p>
+  <a href="#contato" class="btn-primary" style="padding:1rem 2.5rem;font-size:1rem">
+    Quero crescer agora
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
+
+<!-- FORMULÁRIO -->
+<section class="form-section" id="contato">
+  <div class="form-inner reveal">
+    <h2>Fale com um <span class="orange">especialista</span></h2>
+    <p>Preencha abaixo e entraremos em contato em até 24 horas úteis.</p>
+    <div class="form" id="leadForm">
+      <div class="form-row">
+        <input class="mg-input" type="text" id="nome" placeholder="Seu nome" autocomplete="name" />
+        <input class="mg-input" type="text" id="empresa" placeholder="Nome da empresa" />
+      </div>
+      <div class="form-row">
+        <input class="mg-input" type="email" id="email" placeholder="Seu e-mail" autocomplete="email" />
+        <input class="mg-input" type="tel" id="whatsapp" placeholder="WhatsApp (com DDD)" autocomplete="tel" />
+      </div>
+      <select class="mg-select" id="servico">
+        <option value="" disabled selected>Qual serviço te interessa?</option>
+        <option>Tráfego Pago</option>
+        <option>Estratégia de Growth</option>
+        <option>Gestão de Redes Sociais</option>
+        <option>Copywriting & Criativos</option>
+        <option>Analytics & BI</option>
+        <option>Consultoria Estratégica</option>
+        <option>Não sei ainda — quero um diagnóstico</option>
+      </select>
+      <textarea class="mg-textarea" id="msg" placeholder="Conte um pouco sobre seu negócio e objetivo..."></textarea>
+      <button class="form-submit" onclick="handleSubmit()" type="button">
+        Quero falar com um especialista →
+      </button>
+      <p class="form-note">Seus dados estão seguros. Sem spam.</p>
+      <div class="success-msg" id="successMsg">
+        ✓ Mensagem enviada com sucesso!<br>
+        <span style="font-size:0.85rem;opacity:0.8">Em breve um especialista da Mira G entrará em contato.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">© 2025 Mira G · Agência de crescimento e tráfego</div>
+  <div class="footer-tagline">Direção <span>·</span> Foco <span>·</span> Resultado</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form
+  function handleSubmit() {
+    const nome = document.getElementById('nome');
+    const email = document.getElementById('email');
+    let valid = true;
+
+    [nome, email].forEach(f => f.classList.remove('field-error'));
+
+    if (!nome.value.trim()) { nome.classList.add('field-error'); valid = false; }
+    if (!email.value.trim() || !email.value.includes('@')) { email.classList.add('field-error'); valid = false; }
+
+    if (!valid) return;
+
+    const btn = document.querySelector('.form-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    setTimeout(() => {
+      document.getElementById('successMsg').style.display = 'block';
+      btn.style.display = 'none';
+      document.querySelector('.form-note').style.display = 'none';
+    }, 800);
+  }
+
+  // Smooth nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
